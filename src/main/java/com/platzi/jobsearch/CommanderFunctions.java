@@ -5,6 +5,7 @@ import com.beust.jcommander.ParameterException;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 public class CommanderFunctions {
@@ -18,4 +19,21 @@ public class CommanderFunctions {
         jCommander.setProgramName(cliName);
         return jCommander;
     }
+
+    static Optional<List<Object>> parseArguments(
+            JCommander jCommander,
+            String[] arguments,
+            Consumer<JCommander> onError
+    ) {
+        List<Object> result;
+        try {
+            jCommander.parse(arguments);
+            return Optional.of(jCommander.getObjects());
+        } catch (ParameterException exception) {
+            onError.accept(jCommander);
+        }
+        return Optional.empty();
+    }
+
+
 }
