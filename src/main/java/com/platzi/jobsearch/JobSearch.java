@@ -1,7 +1,9 @@
 package com.platzi.jobsearch;
 
 import com.beust.jcommander.JCommander;
+import com.platzi.jobsearch.api.APIJobs;
 import com.platzi.jobsearch.cli.CLIArguments;
+import com.platzi.jobsearch.cli.CLIFunctions;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -49,6 +51,10 @@ public class JobSearch {
     }
 
     private static Stream<JobPosition> executeRequest(Map<String, Object> params) {
+        APIJobs api = buildAPI(APIJobs.class, "https://jobs.github.com");
 
+        return Stream.of(params)
+                .map(api::jobs)
+                .flatMap(Collection::stream);
     }
 }
