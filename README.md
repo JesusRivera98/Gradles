@@ -1,2 +1,2 @@
 # job-search
-Busqueda de trabajo en job.github.com desde terminal con Java
+Job search at job.github.com from terminal with Java
